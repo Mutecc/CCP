@@ -103,7 +103,7 @@
                 </span>
             </div>
             
-            <!-- สลับระหว่าง หน้านำเสนอ กับ จัดการคำถาม (คงไว้เหมือนเดิม) -->
+            <!-- สลับระหว่าง หน้านำเสนอ กับ จัดการคำถาม -->
             <div class="flex bg-slate-900 p-1 rounded-lg text-xs font-semibold border border-slate-700">
                 <button id="tabPresentationBtn" onclick="switchTeacherTab('presentation')" class="px-3 py-1.5 rounded-md dashboard-tab-active">
                     <i class="fa-solid fa-desktop mr-1"></i> หน้านำเสนอ & คอนโทรล
@@ -122,7 +122,7 @@
                 <iframe id="canvaEmbedIframe" class="w-full h-full border-0 absolute inset-0" src="" allowfullscreen></iframe>
                 
                 <!-- หน้าจอพักพรีเซนต์ (Overlay พักหน้าจอ) -->
-                <div id="pauseOverlay" class="hidden absolute inset-0 bg-slate-950 z-20 flex flex-col items-center justify-center text-center p-6">
+                <div id="pauseOverlay" class="hidden absolute inset-0 bg-slate-950/95 z-20 flex flex-col items-center justify-center text-center p-6">
                     <div class="w-20 h-20 bg-blue-600/10 text-blue-400 rounded-full flex items-center justify-center text-3xl mb-4 border border-blue-500/20 animate-pulse">
                         <i class="fa-solid fa-pause"></i>
                     </div>
@@ -136,32 +136,49 @@
                 </div>
             </div>
 
-            <!-- CONTROL BAR (เฉพาะปุ่มที่ขอ) -->
-            <div class="bg-slate-800 border-t border-slate-700 p-3 text-white flex flex-wrap justify-between items-center gap-3">
+            <!-- CONTROL BAR (เพิ่มปุ่มสร้างคำถามแต่ละแบบกลับคืนมา + ปุ่มควบคุมระบบ) -->
+            <div class="bg-slate-800 border-t border-slate-700 p-2.5 text-white flex flex-wrap justify-between items-center gap-2">
+                <!-- ฝั่งซ้าย: โหลด Canva Slide -->
                 <div class="flex items-center gap-2">
-                    <input type="url" id="canvaLinkInput" placeholder="วางลิงก์แชร์ Canva ที่นี่..." class="bg-slate-900 border border-slate-700 px-3 py-1.5 rounded-lg text-xs w-64 focus:outline-none focus:border-blue-500 text-white">
+                    <input type="url" id="canvaLinkInput" placeholder="วางลิงก์แชร์ Canva ที่นี่..." class="bg-slate-900 border border-slate-700 px-3 py-1.5 rounded-lg text-xs w-60 focus:outline-none focus:border-blue-500 text-white">
                     <button onclick="loadCanvaSlide()" class="bg-slate-700 hover:bg-slate-600 border border-slate-600 px-3 py-1.5 rounded-lg text-xs font-semibold">โหลดสไลด์</button>
                 </div>
 
-                <!-- ชุดปุ่มคอนโทรลหลัก 4 ปุ่ม -->
-                <div class="flex flex-wrap gap-2">
-                    <button onclick="sendQuestionModal()" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-3 py-2 rounded-lg transition-all flex items-center gap-1.5 shadow-md shadow-blue-600/30">
-                        <i class="fa-solid fa-paper-plane"></i> โยนคำถาม
+                <!-- ฝั่งขวา: ชุดปุ่มส่งคำถามด่วนตามประเภท + ปุ่มควบคุมการนำเสนอ -->
+                <div class="flex flex-wrap items-center gap-2">
+                    <!-- ปุ่มพักหน้าจอ -->
+                    <button id="pauseBtn" onclick="togglePauseScreen()" class="bg-slate-700 hover:bg-slate-600 border border-slate-600 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5">
+                        <i class="fa-solid fa-pause"></i> พักหน้าจอ
                     </button>
-                    <button onclick="closeAnswers()" class="bg-amber-600 hover:bg-amber-500 text-white text-xs font-semibold px-3 py-2 rounded-lg transition-all flex items-center gap-1.5 shadow-md shadow-amber-600/30">
+                    <!-- ปุ่มปิดตอบรับ -->
+                    <button onclick="closeAnswers()" class="bg-amber-600 hover:bg-amber-500 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 shadow-sm">
                         <i class="fa-solid fa-lock"></i> ปิดตอบรับ
                     </button>
-                    <button onclick="giveStarsModal()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-3 py-2 rounded-lg transition-all flex items-center gap-1.5 shadow-md shadow-emerald-600/30">
+                    <!-- ปุ่มให้คะแนน -->
+                    <button onclick="giveStarsModal()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 shadow-sm">
                         <i class="fa-solid fa-star"></i> ให้คะแนน
                     </button>
-                    <button id="pauseBtn" onclick="togglePauseScreen()" class="bg-slate-700 hover:bg-slate-600 border border-slate-600 text-white text-xs font-semibold px-3 py-2 rounded-lg transition-all flex items-center gap-1.5">
-                        <i class="fa-solid fa-pause"></i> พักหน้าจอ
+
+                    <div class="h-4 w-[1px] bg-slate-600 mx-1"></div>
+
+                    <!-- ชุดปุ่มสร้าง/โยนคำถามแต่ละแบบ (ดึงกลับมาครบชุด) -->
+                    <button onclick="triggerQuickQuestion('MCQ')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 shadow-md shadow-blue-600/20">
+                        <i class="fa-solid fa-list-check"></i> MCQ คำถาม
+                    </button>
+                    <button onclick="triggerQuickQuestion('WordCloud')" class="bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 shadow-md shadow-purple-600/20">
+                        <i class="fa-solid fa-cloud"></i> WordCloud
+                    </button>
+                    <button onclick="triggerQuickQuestion('ShortAnswer')" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 shadow-md shadow-indigo-600/20">
+                        <i class="fa-solid fa-font"></i> ตอบสั้น
+                    </button>
+                    <button onclick="showLeaderboardModal()" class="bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 shadow-md shadow-rose-600/20">
+                        <i class="fa-solid fa-trophy"></i> Leaderboard
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- TAB B: Manage Questions (กำหนดคำถามล่วงหน้า - คงไว้เดิม) -->
+        <!-- TAB B: Manage Questions (กำหนดคำถามล่วงหน้า) -->
         <div id="teacherManageTab" class="hidden flex-grow p-4 bg-slate-900 overflow-y-auto">
             <div class="max-w-4xl mx-auto space-y-6">
                 <!-- ฟอร์มเพิ่มคำถาม -->
@@ -407,7 +424,6 @@
             }
         }
 
-        // จัดการฟอร์มบันทึกคำถามล่วงหน้า
         function toggleOptionInputs() {
             const type = document.getElementById('qType').value;
             document.getElementById('mcqOptionsBox').classList.toggle('hidden', type !== 'MCQ');
@@ -465,52 +481,47 @@
             });
         }
 
-        // --- ปุ่มคอนโทรล 4 ปุ่มด้านล่าง ---
+        // --- ปุ่มคอนโทรลและปุ่มส่งคำถามแยกประเภท ---
 
-        // 1. ปุ่มโยนคำถาม (เลือกจากที่บันทึกไว้ หรือ พิมพ์สด)
-        async function sendQuestionModal() {
-            let optionsHtml = '<option value="QUICK">คำถามด่วนทั่วไป (A, B, C, D)</option>';
-            questionList.forEach(q => {
-                optionsHtml += `<option value="${q.slideNum}">สไลด์ที่ ${q.slideNum}: ${q.title}</option>`;
+        // ส่งคำถามด่วนตามประเภท (MCQ, WordCloud, ShortAnswer)
+        async function triggerQuickQuestion(type) {
+            let title = "ตอบคำถามกิจกรรมประจำสไลด์นี้";
+            if (type === "MCQ") title = "เลือกคำตอบที่คุณคิดว่าถูกต้อง";
+            else if (type === "WordCloud") title = "พิมพ์คำสำคัญที่คุณคิดถึงในข้อนี้";
+            else if (type === "ShortAnswer") title = "พิมพ์คำตอบแบบสั้นของคุณ";
+
+            Swal.fire({ title: `กำลังเปิดโหมด ${type}...`, didOpen: () => Swal.showLoading() });
+            
+            await apiPost({
+                action: "controlRoom",
+                roomId: currentRoom,
+                status: "open",
+                type: type,
+                questionData: { title: title, type: type }
             });
 
-            const { value: selectedVal } = await Swal.fire({
-                title: '🚀 เลือกคำถามเพื่อโยนให้นักเรียน',
-                background: '#1e293b',
-                color: '#fff',
-                html: `<select id="swal-q-select" class="swal2-input bg-slate-900 border-slate-700 text-white text-sm">${optionsHtml}</select>`,
-                showCancelButton: true,
-                confirmButtonText: 'โยนคำถามทันที',
-                preConfirm: () => document.getElementById('swal-q-select').value
-            });
-
-            if (selectedVal) {
-                let qData = { title: "เลือกคำตอบที่คุณคิดว่าถูกต้อง", type: "MCQ" };
-                if (selectedVal !== "QUICK") {
-                    const found = questionList.find(q => q.slideNum == selectedVal);
-                    if (found) qData = found;
-                }
-
-                Swal.fire({ title: 'กำลังโยนคำถาม...', didOpen: () => Swal.showLoading() });
-                await apiPost({
-                    action: "controlRoom",
-                    roomId: currentRoom,
-                    status: "open",
-                    type: qData.type,
-                    questionData: qData
-                });
-                Swal.fire('โยนคำถามสำเร็จ!', 'หน้าจอนักเรียนเปิดให้ตอบเรียบร้อยแล้ว', 'success');
-            }
+            Swal.fire('เปิดการรับคำตอบสำเร็จ!', `เปิดโหมด ${type} ให้นักเรียนเรียบร้อยแล้ว`, 'success');
         }
 
-        // 2. ปุ่มปิดตอบรับ
+        // ปุ่มดูอันดับคะแนน Leaderboard
+        function showLeaderboardModal() {
+            Swal.fire({
+                title: '🏆 ตารางอันดับคะแนน (Leaderboard)',
+                html: '<p class="text-sm text-slate-300">อันดับดาวสะสมของนักเรียนในห้องเรียนนี้</p>',
+                background: '#1e293b',
+                color: '#fff',
+                confirmButtonText: 'ปิดหน้าต่าง'
+            });
+        }
+
+        // ปุ่มปิดตอบรับ
         async function closeAnswers() {
             Swal.fire({ title: 'กำลังปิดการรับคำตอบ...', didOpen: () => Swal.showLoading() });
             await apiPost({ action: "controlRoom", roomId: currentRoom, status: "closed" });
             Swal.fire('ปิดการตอบรับแล้ว!', 'นักเรียนจะไม่สามารถส่งคำตอบเพิ่มได้', 'info');
         }
 
-        // 3. ปุ่มให้คะแนน
+        // ปุ่มให้คะแนน
         function giveStarsModal() {
             Swal.fire({
                 title: '⭐ ให้คะแนนดาวนักเรียน',
@@ -522,7 +533,7 @@
             });
         }
 
-        // 4. ปุ่มพักหน้าจอ
+        // ปุ่มพักหน้าจอ
         function togglePauseScreen() {
             isPaused = !isPaused;
             const overlay = document.getElementById('pauseOverlay');
@@ -531,11 +542,11 @@
             if (isPaused) {
                 overlay.classList.remove('hidden');
                 btn.innerHTML = `<i class="fa-solid fa-play text-emerald-400"></i> ยกเลิกพักหน้าจอ`;
-                btn.className = "bg-emerald-700 hover:bg-emerald-600 border border-emerald-600 text-white text-xs font-semibold px-3 py-2 rounded-lg transition-all flex items-center gap-1.5";
+                btn.className = "bg-emerald-700 hover:bg-emerald-600 border border-emerald-600 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5";
             } else {
                 overlay.classList.add('hidden');
                 btn.innerHTML = `<i class="fa-solid fa-pause"></i> พักหน้าจอ`;
-                btn.className = "bg-slate-700 hover:bg-slate-600 border border-slate-600 text-white text-xs font-semibold px-3 py-2 rounded-lg transition-all flex items-center gap-1.5";
+                btn.className = "bg-slate-700 hover:bg-slate-600 border border-slate-600 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5";
             }
         }
 
