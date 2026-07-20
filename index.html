@@ -33,9 +33,7 @@
         </div>
     </header>
 
-    <!-- ========================================== -->
     <!-- VIEW 1: AUTHENTICATION VIEW -->
-    <!-- ========================================== -->
     <main id="authView" class="flex-grow flex items-center justify-center p-4">
         <div class="bg-slate-800 p-6 sm:p-8 rounded-2xl shadow-xl w-full max-w-md border border-slate-700">
             <div class="text-center mb-6">
@@ -90,9 +88,7 @@
         </div>
     </main>
 
-    <!-- ========================================== -->
     <!-- VIEW 2: TEACHER DASHBOARD VIEW -->
-    <!-- ========================================== -->
     <main id="teacherDashboardView" class="hidden flex-grow flex flex-col h-[calc(100vh-57px)]">
         <!-- Room Status & Tab Switcher Bar -->
         <div class="bg-slate-800 text-white px-4 py-2 flex justify-between items-center border-b border-slate-700">
@@ -103,7 +99,6 @@
                 </span>
             </div>
             
-            <!-- สลับระหว่าง หน้านำเสนอ กับ จัดการคำถาม -->
             <div class="flex bg-slate-900 p-1 rounded-lg text-xs font-semibold border border-slate-700">
                 <button id="tabPresentationBtn" onclick="switchTeacherTab('presentation')" class="px-3 py-1.5 rounded-md dashboard-tab-active">
                     <i class="fa-solid fa-desktop mr-1"></i> หน้านำเสนอ & คอนโทรล
@@ -116,12 +111,9 @@
 
         <!-- TAB A: Presentation & Control -->
         <div id="teacherPresentationTab" class="flex-grow flex flex-col h-full relative">
-            <!-- Screen Area -->
             <div class="flex-grow relative bg-slate-950 flex items-center justify-center">
-                <!-- Frame สไลด์ Canva -->
                 <iframe id="canvaEmbedIframe" class="w-full h-full border-0 absolute inset-0" src="" allowfullscreen></iframe>
                 
-                <!-- หน้าจอพักพรีเซนต์ (Overlay พักหน้าจอ) -->
                 <div id="pauseOverlay" class="hidden absolute inset-0 bg-slate-950/95 z-20 flex flex-col items-center justify-center text-center p-6">
                     <div class="w-20 h-20 bg-blue-600/10 text-blue-400 rounded-full flex items-center justify-center text-3xl mb-4 border border-blue-500/20 animate-pulse">
                         <i class="fa-solid fa-pause"></i>
@@ -136,32 +128,26 @@
                 </div>
             </div>
 
-            <!-- CONTROL BAR (เพิ่มปุ่มสร้างคำถามแต่ละแบบกลับคืนมา + ปุ่มควบคุมระบบ) -->
+            <!-- CONTROL BAR -->
             <div class="bg-slate-800 border-t border-slate-700 p-2.5 text-white flex flex-wrap justify-between items-center gap-2">
-                <!-- ฝั่งซ้าย: โหลด Canva Slide -->
                 <div class="flex items-center gap-2">
                     <input type="url" id="canvaLinkInput" placeholder="วางลิงก์แชร์ Canva ที่นี่..." class="bg-slate-900 border border-slate-700 px-3 py-1.5 rounded-lg text-xs w-60 focus:outline-none focus:border-blue-500 text-white">
                     <button onclick="loadCanvaSlide()" class="bg-slate-700 hover:bg-slate-600 border border-slate-600 px-3 py-1.5 rounded-lg text-xs font-semibold">โหลดสไลด์</button>
                 </div>
 
-                <!-- ฝั่งขวา: ชุดปุ่มส่งคำถามด่วนตามประเภท + ปุ่มควบคุมการนำเสนอ -->
                 <div class="flex flex-wrap items-center gap-2">
-                    <!-- ปุ่มพักหน้าจอ -->
                     <button id="pauseBtn" onclick="togglePauseScreen()" class="bg-slate-700 hover:bg-slate-600 border border-slate-600 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5">
                         <i class="fa-solid fa-pause"></i> พักหน้าจอ
                     </button>
-                    <!-- ปุ่มปิดตอบรับ -->
                     <button onclick="closeAnswers()" class="bg-amber-600 hover:bg-amber-500 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 shadow-sm">
                         <i class="fa-solid fa-lock"></i> ปิดตอบรับ
                     </button>
-                    <!-- ปุ่มให้คะแนน -->
                     <button onclick="giveStarsModal()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 shadow-sm">
                         <i class="fa-solid fa-star"></i> ให้คะแนน
                     </button>
 
                     <div class="h-4 w-[1px] bg-slate-600 mx-1"></div>
 
-                    <!-- ชุดปุ่มสร้าง/โยนคำถามแต่ละแบบ (ดึงกลับมาครบชุด) -->
                     <button onclick="triggerQuickQuestion('MCQ')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 shadow-md shadow-blue-600/20">
                         <i class="fa-solid fa-list-check"></i> MCQ คำถาม
                     </button>
@@ -178,10 +164,9 @@
             </div>
         </div>
 
-        <!-- TAB B: Manage Questions (กำหนดคำถามล่วงหน้า) -->
+        <!-- TAB B: Manage Questions -->
         <div id="teacherManageTab" class="hidden flex-grow p-4 bg-slate-900 overflow-y-auto">
             <div class="max-w-4xl mx-auto space-y-6">
-                <!-- ฟอร์มเพิ่มคำถาม -->
                 <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700">
                     <h3 class="text-base font-bold text-white mb-4 flex items-center gap-2">
                         <i class="fa-solid fa-circle-plus text-blue-400"></i> กำหนดคำถามล่วงหน้าประจำสไลด์
@@ -244,7 +229,6 @@
                     </form>
                 </div>
 
-                <!-- ตารางรายการคำถาม -->
                 <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700">
                     <h3 class="text-base font-bold text-white mb-3 flex items-center gap-2">
                         <i class="fa-solid fa-list text-slate-400"></i> รายการคำถามที่บันทึกไว้ในบทเรียนนี้
@@ -268,13 +252,12 @@
         </div>
     </main>
 
-    <!-- ========================================== -->
-    <!-- VIEW 3: STUDENT APP VIEW -->
-    <!-- ========================================== -->
-    <main id="studentAppView" class="hidden flex-grow p-4 flex flex-col items-center justify-center max-w-md mx-auto w-full">
-        <div class="w-full bg-slate-800 p-4 rounded-xl border border-slate-700 mb-4 flex justify-between items-center shadow-md">
+    <!-- VIEW 3: STUDENT APP VIEW (เพิ่มกล่องไลฟ์สไลด์ Canva ตรงนี้) -->
+    <main id="studentAppView" class="hidden flex-grow p-3 sm:p-4 flex flex-col items-center max-w-2xl mx-auto w-full space-y-4">
+        <!-- แถบข้อมูลนักเรียน -->
+        <div class="w-full bg-slate-800 p-3.5 rounded-xl border border-slate-700 flex justify-between items-center shadow-md">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-full flex items-center justify-center font-bold">
+                <div class="w-9 h-9 bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-full flex items-center justify-center font-bold text-sm">
                     <i class="fa-solid fa-user-graduate"></i>
                 </div>
                 <div>
@@ -287,23 +270,40 @@
             </div>
         </div>
 
-        <div id="studentInteractiveCard" class="w-full bg-slate-800 p-6 rounded-2xl shadow-xl border border-slate-700 text-center">
+        <!-- 📺 กล่องแสดงสไลด์นำเสนอสด (Live Canva Slide) -->
+        <div class="w-full bg-slate-800 rounded-2xl border border-slate-700 overflow-hidden shadow-xl flex flex-col">
+            <div class="bg-slate-900 px-4 py-2 border-b border-slate-700 flex justify-between items-center">
+                <span class="text-xs font-bold text-slate-300 flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+                    <i class="fa-solid fa-desktop text-blue-400"></i> หน้าจอนำเสนออาจารย์สด
+                </span>
+                <span class="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded border border-slate-700">CANVA LIVE</span>
+            </div>
+            <div class="relative w-full aspect-video bg-slate-950 flex items-center justify-center">
+                <iframe id="studentCanvaIframe" class="w-full h-full border-0 absolute inset-0" src="" allowfullscreen></iframe>
+                <div id="studentSlidePlaceholder" class="text-center p-6 text-slate-500">
+                    <i class="fa-solid fa-chalkboard text-4xl mb-2 block opacity-40"></i>
+                    <p class="text-xs">รออาจารย์เปิดสไลด์นำเสนอ...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ✍️ กล่องตอบคำถาม Interactive -->
+        <div id="studentInteractiveCard" class="w-full bg-slate-800 p-5 rounded-2xl shadow-xl border border-slate-700 text-center">
             <div id="studentWaitingBox">
-                <div class="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
-                <h3 class="font-bold text-slate-200">กำลังรออาจารย์เปิดคำถาม...</h3>
-                <p class="text-xs text-slate-400 mt-1">ตั้งใจฟังอาจารย์นำเสนอสไลด์บนหน้าจอนะครับ</p>
+                <div class="w-8 h-8 border-3 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
+                <h3 class="font-bold text-slate-200 text-sm">กำลังรออาจารย์เปิดคำถาม...</h3>
+                <p class="text-xs text-slate-400 mt-0.5">รับชมสไลด์การสอนด้านบนควบคู่ไปด้วยนะครับ</p>
             </div>
 
             <div id="studentMcqBox" class="hidden space-y-3">
-                <h3 id="studentQTitle" class="font-bold text-white text-base mb-4 text-left">เลือกคำตอบของคุณ</h3>
+                <h3 id="studentQTitle" class="font-bold text-white text-base mb-3 text-left">เลือกคำตอบของคุณ</h3>
                 <div id="studentOptionsContainer" class="space-y-2"></div>
             </div>
         </div>
     </main>
 
-    <!-- ========================================== -->
     <!-- JAVASCRIPT LOGIC -->
-    <!-- ========================================== -->
     <script>
         const GAS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxSaXChEbJdWowylFPTNAN8acINvBjdYTd8rAWfgZK5Gg4j7rBogaXwL8NB5pgDfuGO1g/exec"; 
 
@@ -313,6 +313,7 @@
         let questionList = [];
         let pollingTimer = null;
         let isPaused = false;
+        let currentLoadedSlideUrl = '';
 
         async function apiPost(data) {
             try {
@@ -341,20 +342,19 @@
 
         function formatCanvaUrl(url) {
             if (!url) return '';
-            if (url.includes('canva.com/design/')) {
-                let cleanUrl = url.split('?')[0];
+            let cleanUrl = url.trim().split('?')[0];
+
+            if (cleanUrl.includes('/design/')) {
+                cleanUrl = cleanUrl.replace(/\/edit.*$/, '');
                 if (!cleanUrl.endsWith('/view')) {
-                    cleanUrl = cleanUrl.replace(/\/view.*$/, '');
-                    cleanUrl += '/view?embed';
-                } else {
-                    cleanUrl += '?embed';
+                    cleanUrl += '/view';
                 }
-                return cleanUrl;
+                return cleanUrl + '?embed';
             }
-            return url;
+            return cleanUrl;
         }
 
-        function loadCanvaSlide() {
+        async function loadCanvaSlide() {
             const rawUrl = document.getElementById('canvaLinkInput').value.trim();
             if (!rawUrl) {
                 Swal.fire('กรุณาวางลิงก์', 'โปรดวางลิงก์ Canva Presentation', 'warning');
@@ -363,6 +363,13 @@
             const embedUrl = formatCanvaUrl(rawUrl);
             document.getElementById('canvaEmbedIframe').src = embedUrl;
             document.getElementById('canvaPlaceholder').classList.add('hidden');
+
+            // ส่งลิงก์สไลด์ไปยังครู/ห้องเรียน เพื่อให้นักเรียน Sync ตามได้สดๆ
+            await apiPost({
+                action: "updateSlideUrl",
+                roomId: currentRoom,
+                slideUrl: embedUrl
+            });
         }
 
         function switchRole(role) {
@@ -481,9 +488,6 @@
             });
         }
 
-        // --- ปุ่มคอนโทรลและปุ่มส่งคำถามแยกประเภท ---
-
-        // ส่งคำถามด่วนตามประเภท (MCQ, WordCloud, ShortAnswer)
         async function triggerQuickQuestion(type) {
             let title = "ตอบคำถามกิจกรรมประจำสไลด์นี้";
             if (type === "MCQ") title = "เลือกคำตอบที่คุณคิดว่าถูกต้อง";
@@ -503,7 +507,6 @@
             Swal.fire('เปิดการรับคำตอบสำเร็จ!', `เปิดโหมด ${type} ให้นักเรียนเรียบร้อยแล้ว`, 'success');
         }
 
-        // ปุ่มดูอันดับคะแนน Leaderboard
         function showLeaderboardModal() {
             Swal.fire({
                 title: '🏆 ตารางอันดับคะแนน (Leaderboard)',
@@ -514,14 +517,12 @@
             });
         }
 
-        // ปุ่มปิดตอบรับ
         async function closeAnswers() {
             Swal.fire({ title: 'กำลังปิดการรับคำตอบ...', didOpen: () => Swal.showLoading() });
             await apiPost({ action: "controlRoom", roomId: currentRoom, status: "closed" });
             Swal.fire('ปิดการตอบรับแล้ว!', 'นักเรียนจะไม่สามารถส่งคำตอบเพิ่มได้', 'info');
         }
 
-        // ปุ่มให้คะแนน
         function giveStarsModal() {
             Swal.fire({
                 title: '⭐ ให้คะแนนดาวนักเรียน',
@@ -533,7 +534,6 @@
             });
         }
 
-        // ปุ่มพักหน้าจอ
         function togglePauseScreen() {
             isPaused = !isPaused;
             const overlay = document.getElementById('pauseOverlay');
@@ -576,26 +576,54 @@
 
         async function checkStudentRoomStatus() {
             const res = await apiGet({ action: "getRoomState", roomId: currentRoom });
-            if (res && res.roomInfo && res.roomInfo.status === "open") {
-                const q = res.roomInfo.questionData;
-                document.getElementById('studentWaitingBox').classList.add('hidden');
-                document.getElementById('studentMcqBox').classList.remove('hidden');
-                document.getElementById('studentQTitle').innerText = q ? q.title : 'กรุณาเลือกคำตอบ';
+            if (res && res.roomInfo) {
+                // 1. Sync สไลด์นำเสนอจากอาจารย์สดๆ
+                if (res.roomInfo.slideUrl && res.roomInfo.slideUrl !== currentLoadedSlideUrl) {
+                    currentLoadedSlideUrl = res.roomInfo.slideUrl;
+                    document.getElementById('studentCanvaIframe').src = currentLoadedSlideUrl;
+                    document.getElementById('studentSlidePlaceholder').classList.add('hidden');
+                }
 
-                const container = document.getElementById('studentOptionsContainer');
-                container.innerHTML = '';
-                const opts = ["A", "B", "C", "D"];
-                opts.forEach((label) => {
-                    container.innerHTML += `
-                        <button onclick="submitStudentAnswer('${label}')" class="w-full bg-slate-900 hover:bg-blue-600/30 border border-slate-700 hover:border-blue-500 font-bold text-white py-3 px-4 rounded-xl text-left flex items-center gap-3 transition-all">
-                            <span class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center text-xs font-bold">${label}</span>
-                            <span>ตัวเลือก ${label}</span>
-                        </button>
-                    `;
-                });
-            } else {
-                document.getElementById('studentMcqBox').classList.add('hidden');
-                document.getElementById('studentWaitingBox').classList.remove('hidden');
+                // 2. Sync สถานะเปิด/ปิดรับคำถาม
+                if (res.roomInfo.status === "open") {
+                    const q = res.roomInfo.questionData || {};
+                    const qType = q.type || res.roomInfo.type || 'MCQ';
+
+                    document.getElementById('studentWaitingBox').classList.add('hidden');
+                    document.getElementById('studentMcqBox').classList.remove('hidden');
+                    document.getElementById('studentQTitle').innerText = q.title || 'กรุณาตอบคำถาม';
+
+                    const container = document.getElementById('studentOptionsContainer');
+                    container.innerHTML = '';
+
+                    if (qType === 'MCQ') {
+                        const opts = (q.options && q.options.length > 0) ? q.options : ["ตัวเลือก A", "ตัวเลือก B", "ตัวเลือก C", "ตัวเลือก D"];
+                        const labels = ["A", "B", "C", "D"];
+                        
+                        opts.forEach((optText, index) => {
+                            const label = labels[index] || (index + 1);
+                            container.innerHTML += `
+                                <button onclick="submitStudentAnswer('${label}')" class="w-full bg-slate-900 hover:bg-blue-600/30 border border-slate-700 hover:border-blue-500 font-bold text-white py-3 px-4 rounded-xl text-left flex items-center gap-3 transition-all">
+                                    <span class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center text-xs font-bold">${label}</span>
+                                    <span>${optText}</span>
+                                </button>
+                            `;
+                        });
+                    } else {
+                        const placeholderText = (qType === 'WordCloud') ? 'พิมพ์คำสั้นๆ 1-2 คำ...' : 'พิมพ์คำตอบของคุณที่นี่...';
+                        container.innerHTML = `
+                            <div class="space-y-3">
+                                <input type="text" id="studentTextInput" placeholder="${placeholderText}" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 focus:outline-none focus:border-blue-500 text-white text-center text-base">
+                                <button onclick="submitStudentTextAnswer()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl transition-all shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-paper-plane"></i> ส่งคำตอบ
+                                </button>
+                            </div>
+                        `;
+                    }
+                } else {
+                    document.getElementById('studentMcqBox').classList.add('hidden');
+                    document.getElementById('studentWaitingBox').classList.remove('hidden');
+                }
             }
         }
 
@@ -603,6 +631,20 @@
             Swal.fire({ title: 'กำลังส่งคำตอบ...', didOpen: () => Swal.showLoading() });
             await apiPost({ action: "submitAnswer", roomId: currentRoom, studentId: currentUser.id, answer: ans });
             Swal.fire('ส่งคำตอบแล้ว!', `คุณเลือกข้อ ${ans}`, 'success');
+            document.getElementById('studentMcqBox').classList.add('hidden');
+            document.getElementById('studentWaitingBox').classList.remove('hidden');
+        }
+
+        async function submitStudentTextAnswer() {
+            const textInput = document.getElementById('studentTextInput');
+            if (!textInput || !textInput.value.trim()) {
+                Swal.fire('กรุณากรอกคำตอบ', 'โปรดพิมพ์ข้อความก่อนกดส่ง', 'warning');
+                return;
+            }
+            const ansText = textInput.value.trim();
+            Swal.fire({ title: 'กำลังส่งคำตอบ...', didOpen: () => Swal.showLoading() });
+            await apiPost({ action: "submitAnswer", roomId: currentRoom, studentId: currentUser.id, answer: ansText });
+            Swal.fire('ส่งคำตอบแล้ว!', `คำตอบของคุณ: "${ansText}"`, 'success');
             document.getElementById('studentMcqBox').classList.add('hidden');
             document.getElementById('studentWaitingBox').classList.remove('hidden');
         }
